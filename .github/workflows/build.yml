@@ -1,4 +1,4 @@
-nname: Build Rnotes
+name: Build Rnotes
 
 on:
   push:
