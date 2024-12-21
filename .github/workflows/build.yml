@@ -1,0 +1,42 @@
+name: Build Rnotes
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Install dependencies
+        run: |
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            rustup target add x86_64-pc-windows-msvc
+          elif [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+            rustup target add x86_64-unknown-linux-gnu
+          else
+            rustup target add aarch64-apple-darwin
+          fi
+
+      - name: Install Tauri CLI
+        run: cargo install tauri-cli '^2.0.0' --locked
+
+      - name: Build project
+        run: cargo tauri build
+
