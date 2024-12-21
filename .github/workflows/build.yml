@@ -25,6 +25,7 @@ jobs:
           override: true
 
       - name: Install dependencies
+        shell: bash
         run: |
           if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
             rustup target add x86_64-unknown-linux-gnu
@@ -33,7 +34,6 @@ jobs:
           elif [ "${{ matrix.os }}" = "windows-latest" ]; then
             rustup target add x86_64-pc-windows-msvc
           fi
-        shell: bash
 
       - name: Install Tauri CLI
         run: cargo install tauri-cli
