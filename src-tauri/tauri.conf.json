@@ -8,17 +8,28 @@
         "targets": "all",
         "icon": [
             "icons/128x128.png",
+            "icons/128x128@2x.png",
             "icons/96x96.png",
             "icons/64x64.png",
             "icons/32x32.png",
-            "icons/rnotes-logo.ico"
+            "icons/Square30x30Logo.png",
+            "icons/Square44x44Logo.png",
+            "icons/Square71x71Logo.png",
+            "icons/Square89x89Logo.png",
+            "icons/Square107x107Logo.png",
+            "icons/Square142x142Logo.png",
+            "icons/Square150x150Logo.png",
+            "icons/Square284x284Logo.png",
+            "icons/Square310x310Logo.png",
+            "icons/StoreLogo.png",
+            "icons/icon.icns",
+            "icons/icon.ico"
         ]
     },
     "productName": "Rote Notes",
     "mainBinaryName": "rnotes",
     "version": "0.1.0",
     "identifier": "com.makeitfast9052.rnotes",
-    "plugins": {},
     "app": {
         "withGlobalTauri": true,
         "windows": [
@@ -30,7 +41,8 @@
             }
         ],
         "security": {
-            "csp": null
+            "csp": null,
+            "capabilities": ["migrated"]
         }
     }
 }

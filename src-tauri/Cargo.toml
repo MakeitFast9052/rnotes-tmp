@@ -18,10 +18,10 @@ chrono = "0.4"
 dirs = "5.0.1"
 
 # Tauri Plugin Deps
-tauri-plugin-dialog = "2"
-tauri-plugin-fs = "2"
-tauri-plugin-shell = "2"
-tauri-plugin-clipboard-manager = "2.0.2"
+# tauri-plugin-dialog = "2"
+# tauri-plugin-fs = "2"
+# tauri-plugin-shell = "2"
+# tauri-plugin-clipboard-manager = "2.0.2"
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
