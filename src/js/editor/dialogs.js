@@ -27,7 +27,7 @@ const actionMap = {
 document.querySelector('#v-kbd').addEventListener('click', () => { dialogs.keybinds.showModal(); });
 dialogs.keybinds.querySelector('button.close').addEventListener('click', () => { dialogs.keybinds.close(); });
 
-function init_kbd() {
+function initKbd() {
     const buttons = dialogs.keybinds.querySelectorAll('.kbd-entry button');
     let activeIndex = 0;
 
@@ -75,4 +75,4 @@ function init_kbd() {
     });
 }
 
-init_kbd();
+initKbd();

@@ -3,15 +3,15 @@ export const { invoke } = window.__TAURI__.core;
 
 // Global DOM consts
 export const textarea = document.querySelector('textarea.textarea');
-export const filename_input = document.querySelector('input.filename');
+export const filenameInput = document.querySelector('input.filename');
 export const preview = document.querySelector('div.preview');
 export const statline = document.querySelector('footer div.statusline');
 export const linenumbers = document.querySelector('div.linenumbers');
 export const wordcount = document.querySelector('div.wordcount');
 
 // Advanced settings' global vars
-export let debug_logging = 'auto';
-export let save_session = 'auto';
+export let debugLogging = 'auto';
+export let saveSession = 'auto';
 export let autosave = 'auto';
 
 // Statline Update fn -- console calls are commented out in release
@@ -19,22 +19,22 @@ export async function stat(msg) {
     if (!msg) { console.error('Invalid msg in `stat()`'); return; }
     statline.className = 'statusline';
 
-    if (debug_logging == 'always') { await invoke('stat', { data: msg }); }
+    if (debugLogging == 'always') { await invoke('stat', { data: msg }); }
 
     if (msg.startsWith(': ')) { console.log(msg); statline.classList.add('success'); }
-    else if (msg.startsWith('! ')) { console.error(msg); statline.classList.add('error'); if (debug_logging !== 'never') { await invoke('stat', { data: msg }); } }
-    else if (msg.startsWith('# ')) { console.warn(msg); statline.classList.add('info'); if (debug_logging !== 'never' && debug_logging !== 'sometimes') { await invoke('stat', { data: msg }); } }
+    else if (msg.startsWith('! ')) { console.error(msg); statline.classList.add('error'); if (debugLogging !== 'never') { await invoke('stat', { data: msg }); } }
+    else if (msg.startsWith('# ')) { console.warn(msg); statline.classList.add('info'); if (debugLogging !== 'never' && debugLogging !== 'sometimes') { await invoke('stat', { data: msg }); } }
 
     statline.innerHTML = msg.slice(2);
 }
 
-async function load_settings() {
+async function loadSettings() {
     try {
         const [msg, content] = await invoke('settings', { kind: 'load', data: '' });
         stat(msg);
 
         if (content) {
-            handle_settings(content);
+            handleSettings(content);
         } else {
             stat('# No settings content found');
         }
@@ -44,16 +44,16 @@ async function load_settings() {
 }
 
 // Main settings fn -- all roads lead to Rome...
-function handle_settings(content) {
+function handleSettings(content) {
     try {
         const settings = JSON.parse(content);
         console.log('Parsed settings:', settings);
 
-        general_settings(settings.general);
+        generalSettings(settings.general);
         if (document.body.classList.contains('editor')) { 
-            editor_settings(settings.editor); 
+            editorSettings(settings.editor); 
         }
-        advanced_settings(settings.advanced);
+        advancedSettings(settings.advanced);
 
         stat(': Loaded settings successfully');
     } catch (error) {
@@ -63,7 +63,7 @@ function handle_settings(content) {
 }
 
 // Apply general settings
-function general_settings(general) {
+function generalSettings(general) {
     const root = document.querySelector('html');
 
     if (general.colorscheme) {
@@ -87,7 +87,7 @@ function general_settings(general) {
 }
 
 // Apply editor settings -- only if the editor is open, though
-function editor_settings(editor) {
+function editorSettings(editor) {
     const wordwrap = editor.wordwrap || 'soft';
     textarea.style.whiteSpace = 
         wordwrap === 'off' ? 'pre' : 
@@ -102,14 +102,14 @@ function editor_settings(editor) {
 }
 
 // Apply advanced settings
-function advanced_settings(advanced) {
-    debug_logging = advanced.debug || 'auto';
-    save_session = advanced.cache || 'auto';
+function advancedSettings(advanced) {
+    debugLogging = advanced.debug || 'auto';
+    saveSession = advanced.cache || 'auto';
     autosave = advanced.autosave || 'auto';
 
-    if (debug_logging !== 'auto' && debug_logging !== 'always' && debug_logging !== 'never') { debug_logging = 'auto'; }
-    if (save_session !== 'auto' && save_session !== 'always' && save_session !== 'never') { save_session = 'auto'; }
+    if (debugLogging !== 'auto' && debugLogging !== 'always' && debugLogging !== 'never') { debugLogging = 'auto'; }
+    if (saveSession !== 'auto' && saveSession !== 'always' && saveSession !== 'never') { saveSession = 'auto'; }
     if (autosave !== 'auto' && autosave !== 'always' && autosave !== 'never') { autosave = 'auto'; }
 }
 
-window.addEventListener('DOMContentLoaded', load_settings);
+window.addEventListener('DOMContentLoaded', loadSettings);

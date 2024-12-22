@@ -1,7 +1,7 @@
 import { invoke, stat } from '../../api/settings.js';
 
-const settings_form = document.querySelector('form.settings');
-const default_settings = {
+const settingsForm = document.querySelector('form.settings');
+const defaultSettings = {
     general: {
         colorscheme: '#ffa500-#ff6347',
         theme: 'system',
@@ -21,7 +21,7 @@ const default_settings = {
 };
 
 // Load settings to the DOM
-async function load_settings() {
+async function loadSettings() {
     const [msg, content] = await invoke('settings', { kind: 'load', data: '' });
     stat(msg);
 
@@ -52,11 +52,11 @@ async function load_settings() {
 }
 
 // Save settings
-async function save_settings() {
-    const form_data = new FormData(settings_form);
-    let form_json = {};
+async function saveSettings() {
+    const formData = new FormData(settingsForm);
+    let formJson = {};
 
-    form_data.forEach((value, key) => {
+    formData.forEach((value, key) => {
         const keys = key.split('.');
         keys.reduce((array, part, index) => {
             if (index == keys.length - 1) {
@@ -65,36 +65,36 @@ async function save_settings() {
                 array[part] = array[part] || {};
             }
             return array[part];
-        }, form_json);
+        }, formJson);
     });
 
-    form_json = JSON.stringify(form_json);
+    formJson = JSON.stringify(formJson);
 
-    const [msg] = await invoke('settings', { kind: 'save', data: form_json });
+    const [msg] = await invoke('settings', { kind: 'save', data: formJson });
     stat(msg);
-    console.log(`Form Data: ${form_json}`);
+    console.log(`Form Data: ${formJson}`);
 }
 
 // Handling the colorschemes
-function fmt_colorscheme() {
+function fmtColorscheme() {
     const primary = document.querySelector('input#primary[type="color"]').value;
     const secondary = document.querySelector('input#secondary[type="color"]').value;
 
     document.querySelector('input[name="general.colorscheme"]').value = `${primary}-${secondary}`;
 }
 
-const primary_accent = document.querySelector('input#primary[type="color"]');
-const secondary_accent = document.querySelector('input#secondary[type="color"]');
+const primaryAccent = document.querySelector('input#primary[type="color"]');
+const secondaryAccent = document.querySelector('input#secondary[type="color"]');
 
 // Event Listeners
-primary_accent.addEventListener('input', fmt_colorscheme);
-secondary_accent.addEventListener('input', fmt_colorscheme);
+primaryAccent.addEventListener('input', fmtColorscheme);
+secondaryAccent.addEventListener('input', fmtColorscheme);
 
 // Submission Listener
-settings_form.addEventListener('submit', (e) => { 
-    fmt_colorscheme(); 
-    save_settings(); 
+settingsForm.addEventListener('submit', (e) => { 
+    fmtColorscheme(); 
+    saveSettings(); 
 });
 
 // Load settings on page load
-document.addEventListener('DOMContentLoaded', load_settings);
+document.addEventListener('DOMContentLoaded', loadSettings);
