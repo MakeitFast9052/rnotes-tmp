@@ -14,27 +14,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install system dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y \
-            libwebkit2gtk-4.0-dev \
-            build-essential \
-            curl \
-            wget \
-            file \
-            libssl-dev \
-            libgtk-3-dev \
-            libayatana-appindicator3-dev \
-            librsvg2-dev
-
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
-      - name: Install dependencies
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libgtk-3-dev \
+            build-essential \
+            libssl-dev \
+            libwebkit2gtk-4.0-dev \
+            libappindicator3-dev \
+            librsvg2-dev
+
+      - name: Install Rust target
         run: rustup target add x86_64-unknown-linux-gnu
 
       - name: Install Tauri CLI
@@ -50,19 +47,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install system dependencies
-        run: |
-          brew install \
-            webkit2gtk \
-            gtk+3
-
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
-      - name: Install dependencies
+      - name: Install Homebrew
+        run: |
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+      - name: Install system dependencies
+        run: |
+          brew install \
+            gtk+3 \
+            webkit2gtk \
+            libappindicator3 \
+            librsvg
+
+      - name: Install Rust target
         run: rustup target add aarch64-apple-darwin
 
       - name: Install Tauri CLI
@@ -78,20 +81,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install system dependencies
-        run: |
-          choco install -y \
-            webkit2gtk \
-            gtk3 \
-            openssl
-
       - name: Set up Rust
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           override: true
 
-      - name: Install dependencies
+      - name: Install Chocolatey
+        run: |
+          Set-ExecutionPolicy Bypass -Scope Process -Force; \
+          [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; \
+          iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+        shell: powershell
+
+      - name: Install system dependencies
+        run: |
+          choco install -y \
+            gtk-runtime \
+            webkitgtk \
+            openssl \
+            vcredist140
+        shell: powershell
+
+      - name: Install Rust target
         run: rustup target add x86_64-pc-windows-msvc
         shell: bash
 
