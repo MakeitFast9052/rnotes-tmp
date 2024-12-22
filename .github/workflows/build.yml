@@ -57,9 +57,6 @@ jobs:
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-      - name: Install system dependencies
-        run: xcode-select --install
-
       - name: Install Rust target
         run: rustup target add aarch64-apple-darwin
 
