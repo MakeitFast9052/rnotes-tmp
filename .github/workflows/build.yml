@@ -6,9 +6,9 @@ on:
       - main
   pull_request:
 
-    jobs:
-      build-linux:
-        name: Build on Linux
+jobs:
+  build-linux:
+    name: Build on Linux
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
