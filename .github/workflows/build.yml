@@ -7,13 +7,9 @@ on:
   pull_request:
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-
-    runs-on: ${{ matrix.os }}
-
+  build-linux:
+    name: Build on Linux
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -25,18 +21,55 @@ jobs:
           override: true
 
       - name: Install dependencies
-        shell: bash
-        run: |
-          if [ "${{ matrix.os }}" = "ubuntu-latest" ]; then
-            rustup target add x86_64-unknown-linux-gnu
-          elif [ "${{ matrix.os }}" = "macos-latest" ]; then
-            rustup target add aarch64-apple-darwin
-          elif [ "${{ matrix.os }}" = "windows-latest" ]; then
-            rustup target add x86_64-pc-windows-msvc
-          fi
+        run: rustup target add x86_64-unknown-linux-gnu
 
       - name: Install Tauri CLI
-        run: cargo install tauri-cli
+        run: cargo install tauri-cli --locked
 
       - name: Build project
-        run: cargo tauri build
+        run: cargo tauri build --release
+
+  build-macos:
+    name: Build on macOS
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Install dependencies
+        run: rustup target add aarch64-apple-darwin
+
+      - name: Install Tauri CLI
+        run: cargo install tauri-cli --locked
+
+      - name: Build project
+        run: cargo tauri build --release
+
+  build-windows:
+    name: Build on Windows
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Install dependencies
+        run: rustup target add x86_64-pc-windows-msvc
+        shell: bash
+
+      - name: Install Tauri CLI
+        run: cargo install tauri-cli --locked
+
+      - name: Build project
+        run: cargo tauri build --release
