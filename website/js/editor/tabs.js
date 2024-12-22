@@ -1,119 +1,123 @@
 // Tab Handling (yes this needs a separate file)
-import { stat, filename_input, textarea, preview, save_session } from '../../api/settings.js';
-import { extract_filename, get_extension, translate } from '../../api/f-end.js';
+import { stat, filenameInput, textarea, preview, saveSession } from '../../api/settings.js';
+import { extractFilename, getExtension, translate } from '../../api/f-end.js';
 
-export let current_tab = 0;
-export let tab_count = 0;
+export let currentTab = 0;
+export let tabCount = 0;
 
-export let active_tabs = new Map(); // Key: Tab ID, Value: [filename, content]
+export let activeTabs = new Map(); // Key: Tab ID, Value: [filename, content]
 
 // Load saved session -- if any
-export async function load_cache() {
+export async function loadCache() {
     try {
-        active_tabs = new Map();
-        add_tab('', '');
+        activeTabs = new Map();
+        addTab('', '');
     } catch (error) {
         stat(`! Error loading session: ${error.message}`);
-        active_tabs = new Map();
-        tab_count = 0;
-        add_tab('', '');
+        activeTabs = new Map();
+        tabCount = 0;
+        addTab('', '');
     }
 }
 
 // Add a new tab with provided filename-content as an Array
-export function add_tab(filename = '', content = '') {
-    save_tab(current_tab);
-    tab_count += 1;
-    active_tabs.set(tab_count, [filename.trim(), content]);
-    switch_tab(tab_count);
-    if (save_session == 'sometimes') { cache_tabs(); }
+export function addTab(filename = '', content = '') {
+    saveTab(currentTab);
+    tabCount += 1;
+    activeTabs.set(tabCount, [filename.trim(), content]);
+    switchTab(tabCount);
+    if (saveSession === 'sometimes') { cacheTabs(); }
 }
 
 // Switch to tab by key + wrapping logic
-export async function switch_tab(key = current_tab) {
+export async function switchTab(key = currentTab) {
     if (key < 1) {
-        key = tab_count;
-    } else if (key > tab_count) {
+        key = tabCount;
+    } else if (key > tabCount) {
         key = 1;
     }
 
-    if (!active_tabs.has(key)) { return null; }
+    if (!activeTabs.has(key)) { return null; }
 
-    save_tab(current_tab);
-    const [filename, content] = active_tabs.get(key);
-    filename_input.value = filename;
+    saveTab(currentTab);
+    const [filename, content] = activeTabs.get(key);
+    filenameInput.value = filename;
     textarea.value = content;
-    current_tab = key;
-    save_tab(current_tab);
+    currentTab = key;
+    saveTab(currentTab);
     translate();
-    // if (save_session == 'always') { cache_tabs(); } // bc switch_tab is called on every translate
+    // if (saveSession == 'always') { cacheTabs(); } // bc switchTab is called on every translate
 }
 
 // Save a Tab's contents
-function save_tab(key = current_tab) {
-    if (!active_tabs.has(key)) { return null; }
-    const textvalue = textarea.disabled ? '' : textarea.value;
-    active_tabs.set(key, [filename_input.value, textvalue]);
+function saveTab(key = currentTab) {
+    if (!activeTabs.has(key)) { return null; }
+    const textValue = textarea.disabled ? '' : textarea.value;
+    activeTabs.set(key, [filenameInput.value, textValue]);
 
-    const tab_handle = document.querySelector('div.tabhandle');
-    tab_handle.innerHTML = '';
+    const tabHandle = document.querySelector('div.tabhandle');
+    tabHandle.innerHTML = '';
 
-    for (const [tab_key, [filename]] of active_tabs) {
-        const tab_element = document.createElement('button');
-        tab_element.textContent = filename ? extract_filename(filename) : 'New Tab';
-        tab_element.className = 'tab-button';
+    for (const [tabKey, [filename]] of activeTabs) {
+        const tabElement = document.createElement('button');
+        tabElement.textContent = filename ? extractFilename(filename) : 'New Tab';
+        tabElement.className = 'tab-button';
 
-        if (tab_key === current_tab) {
-            tab_element.classList.add('active');
+        if (tabKey === currentTab) {
+            tabElement.classList.add('active');
         }
 
-        tab_element.addEventListener('click', () => {
-            switch_tab(tab_key);
+        tabElement.addEventListener('click', () => {
+            switchTab(tabKey);
         });
 
-        tab_handle.appendChild(tab_element);
+        tabHandle.appendChild(tabElement);
     }
     const newTab = document.createElement('button');
     newTab.classList = 'NewTab';
     newTab.textContent = '+';
-    tab_handle.appendChild(newTab);
+    tabHandle.appendChild(newTab);
 }
 
 // Cache Tabs to Disk (based on settings)
-export async function cache_tabs() {
+export async function cacheTabs() {
     return; // :)
 }
 
 // Ripple remove current tab
-export function rm_tab() {
-    if (!active_tabs.has(current_tab)) {
-        stat(`# Tab does not exist: ${current_tab}`);
+export function rmTab() {
+    if (!activeTabs.has(currentTab)) {
+        stat(`# Tab does not exist: ${currentTab}`);
         return;
     }
 
-     if (tab_count == 1) { const tmp = current_tab; add_tab('', ''); rm_tab(tmp); return; }
-    active_tabs.delete(current_tab);
+    if (tabCount === 1) { 
+        const tmp = currentTab; 
+        addTab('', ''); 
+        rmTab(tmp); 
+        return; 
+    }
+    activeTabs.delete(currentTab);
 
-    const updated_tabs = new Map();
-    let new_key = 1;
-    active_tabs.forEach(([filename, content], old_key) => {
-        updated_tabs.set(new_key, [filename, content]);
-        new_key++;
+    const updatedTabs = new Map();
+    let newKey = 1;
+    activeTabs.forEach(([filename, content], oldKey) => {
+        updatedTabs.set(newKey, [filename, content]);
+        newKey++;
     });
-    active_tabs = updated_tabs;
+    activeTabs = updatedTabs;
 
-    tab_count = active_tabs.size;
+    tabCount = activeTabs.size;
 
-    if (tab_count === 0) {
-        add_tab('', '');
+    if (tabCount === 0) {
+        addTab('', '');
     } else {
-        current_tab = current_tab > tab_count ? tab_count : current_tab;
-        switch_tab(current_tab);
+        currentTab = currentTab > tabCount ? tabCount : currentTab;
+        switchTab(currentTab);
     }
 
-    save_tab();
-    cache_tabs();
+    saveTab();
+    cacheTabs();
 
-    stat(`: Removed tab ${current_tab}`);
+    stat(`: Removed tab ${currentTab}`);
 }
-

@@ -2,16 +2,15 @@
 
 // Global DOM consts
 export const textarea = document.querySelector('textarea.textarea');
-export const filename_input = document.querySelector('input.filename');
+export const filenameInput = document.querySelector('input.filename');
 export const preview = document.querySelector('div.preview');
 export const statline = document.querySelector('footer div.statusline');
-export const linenumbers = document.querySelector('div.linenumbers');
-export const wordcount = document.querySelector('div.wordcount');
+export const lineNumbers = document.querySelector('div.linenumbers');
+export const wordCount = document.querySelector('div.wordcount');
 
 // Advanced settings' global vars
-export let debug_logging = 'auto';
-export let save_session = 'auto';
-export let autosave = 'auto';
+export let debugLogging = 'auto';
+export let saveSession = 'auto';
 
 // Statline Update fn -- console calls are commented out in release
 export async function stat(msg) {
@@ -25,28 +24,27 @@ export async function stat(msg) {
     statline.innerHTML = msg.slice(2);
 }
 
-async function load_settings() {
+async function loadSettings() {
     try {
         const content = {
             general: {
-                colorscheme: '#ffa500-#ff6347',
+                colorScheme: '#ffa500-#ff6347',
                 theme: 'system',
                 font: 'legib'
             },
             editor: {
-                wordcount: 'true',
-                linenumbers: 'false',
-                wordwrap: 'hard',
+                wordCount: 'true',
+                lineNumbers: 'false',
+                wordWrap: 'hard',
                 tabs: 'top'
             },
             advanced: {
                 debug: 'auto',
-                autosave: 'always',
                 cache: 'auto'
             }
         }
         if (content) {
-            handle_settings(JSON.stringify(content));
+            handleSettings(JSON.stringify(content));
         } else {
             stat('# No settings content found');
         }
@@ -56,16 +54,16 @@ async function load_settings() {
 }
 
 // Main settings fn -- all roads lead to Rome...
-function handle_settings(content) {
+function handleSettings(content) {
     try {
         const settings = JSON.parse(content);
         console.log('Parsed settings:', settings);
 
-        general_settings(settings.general);
+        generalSettings(settings.general);
         if (document.body.classList.contains('editor')) { 
-            editor_settings(settings.editor); 
+            editorSettings(settings.editor); 
         }
-        advanced_settings(settings.advanced);
+        advancedSettings(settings.advanced);
 
         stat(': Loaded settings successfully');
     } catch (error) {
@@ -75,11 +73,11 @@ function handle_settings(content) {
 }
 
 // Apply general settings
-function general_settings(general) {
+function generalSettings(general) {
     const root = document.querySelector('html');
 
-    if (general.colorscheme) {
-        const [primary, secondary] = general.colorscheme.split('-');
+    if (general.colorScheme) {
+        const [primary, secondary] = general.colorScheme.split('-');
 
         root.style.setProperty('--primary-accent', primary);
         root.style.setProperty('--secondary-accent', secondary);
@@ -88,7 +86,7 @@ function general_settings(general) {
         root.style.setProperty('--secondary-accent', '#ff6347');
     }
 
-    root.classList.toggle('force-dark', general.theme == 'dark');
+    root.classList.toggle('force-dark', general.theme === 'dark');
 
     root.classList.remove('mono', 'legib', 'sans', 'serif');
     if (['mono', 'legib', 'sans', 'serif', 'hwrite'].includes(general.font)) {
@@ -99,29 +97,27 @@ function general_settings(general) {
 }
 
 // Apply editor settings -- only if the editor is open, though
-function editor_settings(editor) {
-    const wordwrap = editor.wordwrap || 'soft';
+function editorSettings(editor) {
+    const wordWrap = editor.wordWrap || 'soft';
     textarea.style.whiteSpace = 
-        wordwrap === 'off' ? 'pre' : 
-        wordwrap === 'soft' ? 'break-spaces' : 
-        wordwrap === 'hard' ? 'pre-wrap' : 'pre-wrap';
+        wordWrap === 'off' ? 'pre' : 
+        wordWrap === 'soft' ? 'break-spaces' : 
+        wordWrap === 'hard' ? 'pre-wrap' : 'pre-wrap';
 
     statline.style.display = editor.statusline === 'true' || editor.statusline === true ? 'block' : 'none';
-    linenumbers.style.display = editor.linenumbers === 'true' || editor.linenumbers === true ? 'block' : 'none';
-    wordcount.style.display = editor.wordcount === 'true' || editor.wordcount === true ? 'block' : 'none';
+    lineNumbers.style.display = editor.lineNumbers === 'true' || editor.lineNumbers === true ? 'block' : 'none';
+    wordCount.style.display = editor.wordCount === 'true' || editor.wordCount === true ? 'block' : 'none';
 
-    if (editor.linenumbers != true && editor.wordwrap != 'off') { textarea.style.whiteSpace = 'pre' }
+    if (editor.lineNumbers !== true && editor.wordWrap !== 'off') { textarea.style.whiteSpace = 'pre'; }
 }
 
 // Apply advanced settings
-function advanced_settings(advanced) {
-    debug_logging = advanced.debug || 'auto';
-    save_session = advanced.cache || 'auto';
-    autosave = advanced.autosave || 'auto';
+function advancedSettings(advanced) {
+    debugLogging = advanced.debug || 'auto';
+    saveSession = advanced.cache || 'auto';
 
-    if (debug_logging !== 'auto' && debug_logging !== 'always' && debug_logging !== 'never') { debug_logging = 'auto'; }
-    if (save_session !== 'auto' && save_session !== 'always' && save_session !== 'never') { save_session = 'auto'; }
-    if (autosave !== 'auto' && autosave !== 'always' && autosave !== 'never') { autosave = 'auto'; }
+    if (debugLogging !== 'auto' && debugLogging !== 'always' && debugLogging !== 'never') { debugLogging = 'auto'; }
+    if (saveSession !== 'auto' && saveSession !== 'always' && saveSession !== 'never') { saveSession = 'auto'; }
 }
 
-window.addEventListener('DOMContentLoaded', load_settings);
+window.addEventListener('DOMContentLoaded', loadSettings);

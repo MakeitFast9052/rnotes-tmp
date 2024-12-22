@@ -1,26 +1,28 @@
-import { stat, textarea, linenumbers, preview } from '../../api/settings.js';
+import { stat, textarea, lineNumbers, preview } from '../../api/settings.js';
 
 // Line number logic
-export function update_linenumbers() { // Sauce: https://webtips.dev/add-line-numbers-to-html-textarea
-    const number_of_lines = textarea.value.split('\n').length;
+export function updateLineNumbers() { // Sauce: https://webtips.dev/add-line-numbers-to-html-textarea
+    const numberOfLines = textarea.value.split('\n').length;
 
-    linenumbers.innerHTML = Array(number_of_lines)
+    lineNumbers.innerHTML = Array(numberOfLines)
         .fill('<span></span>')
         .join('');
 }
 
-export function sync_scroll() { linenumbers.scrollTop = textarea.scrollTop; }
+export function syncScroll() { 
+    lineNumbers.scrollTop = textarea.scrollTop; 
+}
 
-// Wordcount logic
-export function get_wordcount() {
-    if (textarea.disabled) { return; } // Don't mess with Wordcount if the file is Multimedia (see `translate`)
+// Word count logic
+export function getWordCount() {
+    if (textarea.disabled) { return; } // Don't mess with wordcount if the file is multimedia (see `translate`)
     const content = textarea.value.trim();
     const chars = content.length;
     const words = (content.match(/\S+/g) || []).length;
 
-    const chars_string = chars.toLocaleString();
-    const words_string = words.toLocaleString();
+    const charsString = chars.toLocaleString();
+    const wordsString = words.toLocaleString();
 
-    document.querySelector('div.wordcount span#chars').textContent = chars_string;
-    document.querySelector('div.wordcount span#words').textContent = words_string;
+    document.querySelector('div.wordcount span#chars').textContent = charsString;
+    document.querySelector('div.wordcount span#words').textContent = wordsString;
 }

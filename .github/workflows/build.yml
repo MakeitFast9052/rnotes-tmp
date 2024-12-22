@@ -23,7 +23,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt update
-          sudo apt install libwebkit2gtk-4.1-dev \
+          sudo apt install -y libwebkit2gtk-4.1-dev \
           build-essential \
           curl \
           wget \
@@ -42,6 +42,12 @@ jobs:
       - name: Build project
         run: cargo tauri build
 
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-bundle
+          path: src-tauri/target/release/bundle/linux/**/*
+
   build-macos:
     name: Build on macOS
     runs-on: macos-latest
@@ -59,6 +65,9 @@ jobs:
         run: |
           /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+      - name: Install system dependencies
+        run: brew install webkit2gtk gnu-sed
+
       - name: Install Rust target
         run: rustup target add aarch64-apple-darwin
 
@@ -67,6 +76,12 @@ jobs:
 
       - name: Build project
         run: cargo tauri build
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: macos-bundle
+          path: src-tauri/target/release/bundle/macos/**/*
 
   build-windows:
     name: Build on Windows
@@ -91,3 +106,9 @@ jobs:
 
       - name: Build project
         run: cargo tauri build
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-bundle
+          path: src-tauri/target/release/bundle/windows/**/* 
