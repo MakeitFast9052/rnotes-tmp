@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: linux-bundle
-          path: src-tauri/target/release/bundle/linux/**/*
+          path: src-tauri/target/release/bundle/linux/
 
   build-macos:
     name: Build on macOS
@@ -61,13 +61,6 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Install Homebrew
-        run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-      - name: Install system dependencies
-        run: brew install webkit2gtk gnu-sed
-
       - name: Install Rust target
         run: rustup target add aarch64-apple-darwin
 
@@ -81,7 +74,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: macos-bundle
-          path: src-tauri/target/release/bundle/macos/**/*
+          path: src-tauri/target/release/bundle/macos/
 
   build-windows:
     name: Build on Windows
@@ -111,4 +104,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: windows-bundle
-          path: src-tauri/target/release/bundle/windows/**/* 
+          path: src-tauri/target/release/bundle/windows/ 
