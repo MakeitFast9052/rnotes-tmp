@@ -5,12 +5,7 @@
     },
     "bundle": {
         "active": true,
-        "targets": "all",
-        "icon": [
-            "icons/64x64.png",
-            "icons/icon.icns",
-            "icons/icon.ico"
-        ]
+        "targets": "all"
     },
     "productName": "Rote Notes",
     "mainBinaryName": "rnotes",
