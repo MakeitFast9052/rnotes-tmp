@@ -6,7 +6,7 @@ export const textarea = document.querySelector('textarea.textarea');
 export const filenameInput = document.querySelector('input.filename');
 export const preview = document.querySelector('div.preview');
 export const statline = document.querySelector('footer div.statusline');
-export const linenumbers = document.querySelector('div.linenumbers');
+export const lineNumbers = document.querySelector('div.linenumbers');
 export const wordcount = document.querySelector('div.wordcount');
 
 // Advanced settings' global vars

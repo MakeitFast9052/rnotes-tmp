@@ -46,7 +46,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: linux-bundle
-          path: src-tauri/target/release/bundle/linux/
+          path: src-tauri/target/release/bundle/
 
   build-macos:
     name: Build on macOS
@@ -74,7 +74,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: macos-bundle
-          path: src-tauri/target/release/bundle/macos/
+          path: src-tauri/target/release/bundle/
 
   build-windows:
     name: Build on Windows
@@ -104,4 +104,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: windows-bundle
-          path: src-tauri/target/release/bundle/windows/ 
+          path: src-tauri/target/release/bundle/ 

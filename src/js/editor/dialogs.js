@@ -1,7 +1,7 @@
-import { invoke, stat, filename_input, textarea, save_session } from '../../api/settings.js';
-import { translate, adjust_zoom, } from '../../api/f-end.js';
-import { tab_count, current_tab, load_cache, switch_tab, save_tab, add_tab, rm_tab, cache_tabs } from '../editor/tabs.js';
-import { save_file, save_file_as, autosave_fn, open_file, open_folder, open_settings } from '../../api/b-end.js';
+import { invoke, stat, filenameInput, textarea, saveSession } from '../../api/settings.js';
+import { translate, adjustZoom } from '../../api/f-end.js';
+import { tabCount, currentTab, loadCache, switchTab, saveTab, addTab, rmTab, cacheTabs } from '../editor/tabs.js';
+import { saveFile, saveFileAs, autosaveFn, openFile, openFolder, openSettings } from '../../api/b-end.js';
 
 const dialogs = {
     keybinds: document.querySelector('dialog.kbd-shortcuts'),
@@ -9,18 +9,18 @@ const dialogs = {
 
 // Function map
 const actionMap = {
-    save_file,
-    open_file,
-    open_settings,
-    add_tab: () => add_tab('', ''),
-    rm_tab,
-    previous_tab: () => switch_tab(--current_tab),
-    next_tab: () => switch_tab(++current_tab),
-    zoom_in: () => adjust_zoom('+'),
-    reset_zoom: () => adjust_zoom('='),
-    zoom_out: () => adjust_zoom('-'),
+    saveFile,
+    openFile,
+    openSettings,
+    addTab: () => addTab('', ''),
+    rmTab,
+    previousTab: () => switchTab(--currentTab),
+    nextTab: () => switchTab(++currentTab),
+    zoomIn: () => adjustZoom('+'),
+    resetZoom: () => adjustZoom('='),
+    zoomOut: () => adjustZoom('-'),
     reload: () => location.reload(),
-    open_folder,
+    openFolder,
 };
 
 // Keybind dialog

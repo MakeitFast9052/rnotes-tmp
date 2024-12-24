@@ -29,7 +29,7 @@ loadCache();
 autoSaveFn();
 
 // NewTab Trigger
-document.querySelector('button.newTab').addEventListener('click', () => { addTab('', ''); });
+document.querySelector('button.NewTab').addEventListener('click', () => { addTab('', ''); });
 
 // Navbar Event Listeners
 document.querySelector('#f-new').addEventListener('click', () => { addTab('', ''); });

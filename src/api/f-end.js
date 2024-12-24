@@ -5,6 +5,7 @@ import init, { write_markdown } from '../api/wasm/writer.js';
 const { readFile } = window.__TAURI__.fs;
 
 let zoomLvl = 1;
+const multimediaQueue = []; // Queue to store active multimedia URLs
 
 // Closest thing (in JS) to an Enum for storing Filetypes
 export const fileTypes = {
@@ -12,9 +13,9 @@ export const fileTypes = {
     WEB: ['html', 'htm', 'svg', 'mhtm', 'mhtml', 'xml', 'php', 'xhtml'],
     ASCIIDOC: ['ad', 'adoc', 'asciidoc'],
     PLAINTEXT: ['txt', 'log', 'npmignore', 'gitignore', 'csv', 'tsv', 'ini'],
-    CODE: ['js', 'ts', 'py', 'java', 'c', 'cp', 'cpp', 'cs', 'go', 'rb', 'php', 'swift', 'kt', 'css', 'json', 'json5', 'yaml', 'toml', 'sh', 'bash', 'pl', 'r', 'sql', 'dart', 'scala', 'elixir', 'rs', 'haskell', 'clj', 'cljc', 'vb', 'objective-c', 'groovy', 'lua', 'pas', 'plsql', 'sol', 'scss', 'less', 'm'],
+    CODE: ['js', 'ts', 'py', 'java', 'c', 'cp', 'cpp', 'cs', 'go', 'rb', 'php', 'swift', 'kt', 'css', 'json', 'json5', 'yaml', 'toml', 'sh', 'bash', 'pl', 'r', 'sql', 'dart', 'scala', 'elixir', 'rs', 'haskell', 'clj', 'cljc', 'vb', 'objective-c', 'groovy', 'lua', 'pas', 'plsql', 'sol', 'scss', 'less', 'm'], // Includes data filetypes (.toml, .json...), most non-programmers see them as code too
     LATEX: ['tex', 'latex', 'cls', 'sty'],
-    IMAGE: ['jpg', 'jpeg', 'png', 'ico', 'jfif', 'bruh', 'gif', 'bmp', 'tiff', 'webp', 'heif', 'heic'], 
+    IMAGE: ['jpg', 'jpeg', 'png', 'ico', 'jfif', 'bruh', 'gif', 'bmp', 'tiff', 'webp', 'heif', 'heic'], // Yes, .bruh is here, no it's not supported
     AUDIO: ['mp3', 'wav', 'aac', 'ogg', 'oga', 'flac', 'm4a', 'wma', 'opus'],
     VIDEO: ['mp4', 'avi', 'mkv', 'mov', 'wmv', 'flv', 'webm', 'mpeg', 'mpg', '3gp'],
 };
@@ -30,9 +31,16 @@ export function getExtension(name) {
 }
 
 // Render multimedia based on file extension
-export function render_multimedia(binaryData, extension) {
+export function renderMultimedia(binaryData, extension) {
     const blob = new Blob([binaryData]);
     const url = URL.createObjectURL(blob);
+
+    // Manage multimedia queue
+    multimediaQueue.push(url);
+    if (multimediaQueue.length > 1) {
+        const oldUrl = multimediaQueue.shift();
+        URL.revokeObjectURL(oldUrl);
+    }
 
     if (fileTypes.IMAGE.includes(extension)) {
         preview.innerHTML = `<img src="${url}" title="image preview" alt="image preview" style="max-width:100%; height:auto;" />`;
@@ -41,8 +49,6 @@ export function render_multimedia(binaryData, extension) {
     } else if (fileTypes.VIDEO.includes(extension)) {
         preview.innerHTML = `<video controls style="max-width:100%;" alt="video preview"><source src="${url}" type="video/${extension}">Your WebView does not support the video tag.</video>`;
     }
-
-    URL.revokeObjectURL(url);
 }
 
 // Event Loop
@@ -54,7 +60,7 @@ export async function translate() {
 
     if (!extension || filenameInput.value.trim() == '') {
         textarea.disabled = false;
-        preview.innerHTML = `<h3>This file seems to have no extension.</h3><hr>${write_markdown(input)}`;
+        preview.innerHTML = `<h4>This file seems to have no extension.</h4><hr>${write_markdown(input)}`;
     } else if (fileTypes.BINARY.includes(extension)) {
         preview.innerHTML = `<p>Rnotes does not support Binary file reading.</p>`;
     } else if (fileTypes.WEB.includes(extension)) {
@@ -62,7 +68,7 @@ export async function translate() {
         preview.innerHTML = input;
     } else if (fileTypes.ASCIIDOC.includes(extension)) {
         textarea.disabled = false;
-        preview.innerHTML = `<h1>Rnotes does not support AsciiDoc yet.</h1><hr><pre>${input}</pre>`;
+        preview.innerHTML = `<h4>Rnotes does not support AsciiDoc yet.</h4><hr><pre>${input}</pre>`;
     } else if (fileTypes.PLAINTEXT.includes(extension)) {
         textarea.disabled = false;
         preview.innerHTML = `<pre>${input}</pre>`;
@@ -71,7 +77,7 @@ export async function translate() {
         preview.innerHTML = `<code><pre>${input}</pre></code>`;
     } else if (fileTypes.LATEX.includes(extension)) {
         textarea.disabled = false;
-        preview.innerHTML = `<h1>LaTeX files are not supported for rendering.</h1><hr><pre>${input}</pre>`;
+        preview.innerHTML = `<h4>LaTeX files are not supported for rendering.</h4><hr><pre>${input}</pre>`;
     } else if (fileTypes.IMAGE.includes(extension) || fileTypes.AUDIO.includes(extension) || fileTypes.VIDEO.includes(extension)) {
         const binaryData = await readFile(filenameInput.value);
         renderMultimedia(binaryData, extension);

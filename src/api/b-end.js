@@ -1,7 +1,7 @@
 import { invoke, stat, textarea, filenameInput, preview, autosave, } from '../api/settings.js';
 import { fileTypes, getExtension, translate, renderMultimedia, } from '../api/f-end.js';
 import { activeTabs, addTab, switchTab, currentTab, } from '../js/editor/tabs.js';
-export const { open, save } = window._TAURI__.dialog;
+export const { open, save } = window.__TAURI__.dialog;
 
 // APIs for File Handling
 export async function saveFile() {
@@ -25,7 +25,7 @@ export async function saveFileAs() {
     }
 }
 
-export async function autosaveFn() {
+export async function autoSaveFn() {
     if (autosave == 'never') { return; }
 
     if (autosave == 'always') {
@@ -34,6 +34,7 @@ export async function autosaveFn() {
                 await invoke('saveFile', { filepath: filename, content: content });
             } catch (error) {
                 stat(`! Failed to autosave: ${error}`);
+                return;
             }
         }
         stat(': Autosaved all files');
@@ -44,6 +45,7 @@ export async function autosaveFn() {
                 await invoke('saveFile', { filepath: filename, content: content });
             } catch (error) {
                 stat(`! Failed to autosave: ${error}`);
+                return;
             }
         }
         stat(': Autosaved current file');
