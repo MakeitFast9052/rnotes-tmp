@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang='en_US' class='legib'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width,initial-scale=1.0'>
+        <title>Rote Notes -- Settings</title>
+        <link rel='stylesheet' href='css/share/win.css' />
+        <link rel='stylesheet' href='css/share/fonts.css' />
+        <link rel='stylesheet' href='css/settings/main.css' />
+        <link rel='stylesheet' href='css/settings/layout.css' />
+    </head>
+    <body>
+        <form class='settings'>
+            <section><h2>General</h2>
+                <fieldset>
+                    <label for='general.theme'><h3>Theme</h3></label>
+                    <input name='general.theme' id='system' type='radio' value='system' checked>System
+                    <input name='general.theme' id='light' type='radio' value='light'>Light
+                    <input name='general.theme' id='dark' type='radio' value='dark'>Dark
+                </fieldset>
+                <fieldset>
+                    <label for='general.colorscheme'><h3>Colorscheme</h3></label>
+                    <input name='general.colorscheme' type='hidden' value='#FFA500-FF3647'>
+                    Primary Accent: <input id='primary' type='color' value='#FFA500'>
+                    Secondary Accent: <input id='secondary' type='color' value='#FF6347'>
+                </fieldset>
+                <fieldset>
+                    <label for='general.font'><h3>Font</h3></label>
+                    <input name='general.font' id='sans' type='radio' value='sans'>Sans-Serif
+                    <input name='general.font' id='serif' type='radio' value='serif'>Serif
+                    <input name='general.font' id='legib' type='radio' value='legib' checked>Legibility Sans
+                    <input name='general.font' id='mono' type='radio' value='mono'>Monospace
+                    <input name='general.font' id='hwrite' type='radio' value='hwrite'>Handwriting
+                </fieldset>
+            </section>
+            <section><h2>Editor</h2>
+                <label for='editor.wordcount'>Word Count</label>
+                <input type='checkbox' name='editor.wordcount' value='true' checked>
+                <label for='editor.statusline'>Statusline</label>
+                <input type='checkbox' name='editor.statusline' value='true' checked>
+                <label for='editor.linenumbers'>Line Numbers</label>
+                <input type='checkbox' name='editor.linenumbers' value='true' checked>
+                <label for='editor.wordwrap'>Wordwrap</label>
+                <select name='editor.wordwrap' id='wordwrap'>
+                    <option value='hard'>Hard</option>
+                    <option value='soft'>Soft</option>
+                    <option value='off' selected>Off</option>
+                </select>
+            </section>
+            <section><h2>Advanced</h2>
+                <fieldset>
+                    <label for='advanced.debug'><h3>Debug Log</h3></label>
+                    <input type='radio' name='advanced.debug' value='always' id='debug-always'>Always
+                    <input type='radio' name='advanced.debug' value='auto' id='debug-auto' checked>Auto
+                    <input type='radio' name='advanced.debug' value='never' id='debug-never'>Never
+                </fieldset>
+                <fieldset>
+                    <label for='advanced.autosave'><h3>Autosave</h3></label>
+                    <input type='radio' name='advanced.autosave' value='always' id='autosave-always'>Always
+                    <input type='radio' name='advanced.autosave' value='auto' id='autosave-auto' checked>Auto
+                    <input type='radio' name='advanced.autosave' value='never' id='autosave-never'>Never
+                </fieldset>
+                <fieldset>
+                    <label for='advanced.cache'><h3>Save Session</h3></label>
+                    <input type='radio' name='advanced.cache' value='always' id='cache-always'>Always
+                    <input type='radio' name='advanced.cache' value='auto' id='cache-auto' checked>Auto
+                    <input type='radio' name='advanced.cache' value='never' id='cache-never'>Never
+                </fieldset>
+                <fieldset id='action'>
+                    <button type='reset'>Reset to defaults</button>
+                    <button type='submit'>Apply</button>
+                </fieldset>
+            </section>
+        </form>
+        <footer>
+            <div class='statusline'>200 OK</div>
+        </footer>
+        <script type='module' src='api/settings.js' defer></script>
+        <script type='module' src='js/settings/main.js' defer></script>
+    </body>
+</html>

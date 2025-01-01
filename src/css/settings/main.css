@@ -1,0 +1,13 @@
+/* main.css */
+
+html { overflow-y:scroll }
+
+main {
+    font-family:var(--font);
+    margin:0;
+    padding:0;
+    background:var(--bg-dark);
+    color:var(--color);
+    height:100vh;
+    overflow-y:scroll;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang='en' class='legib'>
+    <head>
+        <meta charset='UTF-8' />
+        <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+        <meta name='author' content='MakeitFast9052' />
+        <meta name='description' content='A speed-first, cross-platform text editor powered by Rust.' />
+        <link rel='stylesheet' href='css/share/win.css' />
+        <link rel='stylesheet' href='css/share/fonts.css' />
+        <link rel='stylesheet' href='css/editor/main.css' />
+        <link rel='stylesheet' href='css/editor/layout.css' />
+        <link rel='stylesheet' href='css/editor/tabs.css' />
+        <link rel='stylesheet' href='css/editor/dialogs.css' />
+        <title>Rote Notes</title>
+    </head>
+    <body class='editor'>
+        <!-- Navbar -->
+        <nav>
+            <div class='nav-section'>
+                <h3>File</h3>
+                <div id='nav-file'>
+                    <button id='f-new'>New</button>
+                    <button id='f-open'>Open</button>
+                    <button id='f-open_folder'>Open Folder</button>
+                    <button id='f-save'>Save</button>
+                    <button id='f-save_as'>Save as</button>
+                </div>
+            </div>
+            <div class='nav-section'>
+                <h3>View</h3>
+                <div id='nav-view'>
+                    <button id='v-zoom_i'>Zoom In</button>
+                    <button id='v-zoom_r'>Reset Zoom</button>
+                    <button id='v-zoom_o'>Zoom Out</button>
+                    <button id='v-settings'>Preferences</button>
+                    <button id='v-kbd'>Shortcut Panel</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class='tabhandle'><button class='NewTab'>+</button></div>
+
+        <!-- Dialogs -->
+        <dialog class="kbd-shortcuts">
+            <button class="close" autofocus>✖</button>
+            <div class="kbd-wrapper">
+                <div class="kbd-entry"> <button data-action="save_file">Save File</button> <kbd>Ctrl</kbd> + <kbd>S</kbd> </div>
+                <div class="kbd-entry"> <button data-action="open_file">Open File</button> <kbd>Ctrl</kbd> + <kbd>O</kbd> </div>
+                <div class="kbd-entry"> <button data-action="open_folder">Open Folder</button> <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>O</kbd> </div>
+                <div class="kbd-entry"> <button data-action="open_settings">Open Settings</button> <kbd>Ctrl</kbd> + <kbd>,</kbd> </div>
+                <div class="kbd-entry"> <button data-action="add_tab">Add Tab</button> <kbd>Ctrl</kbd> + <kbd>T</kbd> </div>
+                <div class="kbd-entry"> <button data-action="rm_tab">Remove Tab</button> <kbd>Ctrl</kbd> + <kbd>W</kbd> </div>
+                <div class="kbd-entry"> <button data-action="previous_tab">Previous Tab</button> <kbd>Ctrl</kbd> + <kbd>P</kbd> </div>
+                <div class="kbd-entry"> <button data-action="next_tab">Next Tab</button> <kbd>Ctrl</kbd> + <kbd>N</kbd> </div>
+                <div class="kbd-entry"> <button data-action="zoom_in">Zoom In</button> <kbd>Ctrl</kbd> + <kbd>+</kbd> </div>
+                <div class="kbd-entry"> <button data-action="reset_zoom">Reset Zoom</button> <kbd>Ctrl</kbd> + <kbd>=</kbd> </div>
+                <div class="kbd-entry"> <button data-action="zoom_out">Zoom Out</button> <kbd>Ctrl</kbd> + <kbd>-</kbd> </div>
+                <div class="kbd-entry"> <button data-action="reload">Reload</button> <kbd>Ctrl</kbd> + <kbd>R</kbd> </div>
+            </div>
+        </dialog>
+
+        <!-- Main editor -->
+        <main>
+            <section class='container'>
+                <input type='text' class='filename' title='filename input'>
+                <div class='input-area'>
+                    <div class='linenumbers'>
+                        <span></span>
+                    </div>
+                    <textarea class='textarea' title='file contents'></textarea>
+                </div>
+            </section>
+
+            <div class='preview'></div>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <div class='statusline'>200 OK</div>
+        </footer>
+        <div class='wordcount'>
+            <div>
+                <span id='words'>0</span>
+                <span>words, </span>
+                <span id='chars'>0</span>
+                <span>characters</span>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script src='api/settings.js' type='module' defer></script>
+        <script src='api/f-end.js' type='module' defer></script>
+        <script src='api/b-end.js' type='module' defer></script>
+        <script src='js/editor/main.js' type='module' defer></script>
+        <script src='js/editor/tabs.js' type='module' defer></script>
+        <script src='js/editor/dialogs.js' type='module' defer></script>
+        <script src='js/editor/navbar.js' type='module' defer></script>
+        <script src='js/editor/master.js' type='module' defer></script>
+        <div class='script-wrapper' description='Script Wrapper for WASM'>
+            <script src='api/wasm/writer.js' type='module'></script>
+        </div>
+    </body>
+</html>

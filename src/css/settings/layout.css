@@ -1,0 +1,68 @@
+/* Settings Window Styling */
+
+form.settings {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    height:100%;
+    padding:24px;
+}
+
+section {
+    width:90%;
+}
+
+fieldset {
+    background:var(--bg-light);
+    border-radius:8px;
+    border:none;
+    padding:16px;
+    margin:16px;
+    width:90%;
+    box-shadow:0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+label {
+    display:block;
+    margin-bottom:12px;
+    font-size:1rem;
+    font-weight:500;
+}
+
+h2 {
+    color:var(--primary-accent);
+    font-weight:600;
+    margin-bottom:12px;
+}
+
+h3 {
+    color:var(--primary-accent);
+    font-weight:500;
+    margin-bottom:12px;
+}
+
+input[type='radio'] { margin-right:8px; vertical-align:middle; }
+
+input[type='checkbox'] { float:right; transform:translate(0,-1.5rem); }
+select { min-width:100%; font:var(--font); background:var(--bg-dark); border:none; box-shadow:var(--shadow); }
+
+fieldset#action {
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+    padding:0;
+    margin-top:16px;
+}
+
+button {
+    background:var(--primary-accent); 
+    color:var(--complement);
+    font:var(--font);
+    border-radius:4px;
+    padding:12px 20px;
+    margin:8px;
+    width:50%;
+    box-shadow:var(--shadow);
+}

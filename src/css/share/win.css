@@ -1,0 +1,127 @@
+:root {
+    --font:400 16px/18px 'OpenSans',sans-serif;
+    --text-font:400 16px/20px 'JetBrainsMono',monospace;
+
+    /* Nerdy styling defaults */
+    font-synthesis:none;
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    -webkit-text-size-adjust:100%;
+}
+
+html {
+    font:var(--font);
+    margin:0;
+    padding:0;
+    overflow-y:scroll;
+    background-color:var(--bg-light);
+    color:var(--color);
+}
+
+/* Themes (Dark/light) */
+html {
+    color: hsl(0, 0%, 10%);
+    background-color: hsl(0, 0%, 90%);
+    --color: hsl(0, 0%, 10%);
+    --complement: hsl(0, 0%, 90%);
+    --bg-light: hsl(0, 0%, 100%);
+    --bg-dark: hsl(210, 10%, 90%);
+    --shadow: hsl(0, 0%, 80%);
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        color: hsl(0, 0%, 90%);
+        background-color: hsl(0, 0%, 10%);
+        --color: hsl(0, 0%, 90%);
+        --complement: hsl(0, 0%, 10%);
+        --bg-light: hsl(0, 0%, 20%);
+        --bg-dark: hsl(0, 0%, 10%);
+        --shadow: hsl(0, 0%, 30%);
+    }
+}
+
+html.force-light {
+    color: hsl(0, 0%, 10%);
+    background-color: hsl(0, 0%, 90%);
+    --color: hsl(0, 0%, 10%);
+    --complement: hsl(0, 0%, 90%);
+    --bg-light: hsl(0, 0%, 100%);
+    --bg-dark: hsl(210, 10%, 90%);
+    --shadow: hsl(0, 0%, 80%);
+}
+
+html.force-dark {
+    color: hsl(0, 0%, 90%);
+    background-color: hsl(0, 0%, 10%);
+    --color: hsl(0, 0%, 90%);
+    --complement: hsl(0, 0%, 10%);
+    --bg-light: hsl(0, 0%, 20%);
+    --bg-dark: hsl(0, 0%, 10%);
+    --shadow: hsl(0, 0%, 30%);
+}
+
+/* Colorschemes :) */
+html { --primary-accent:#FFA500; --secondary-accent:#FF6347; }
+
+/* Fonts */
+html.sans { --text-font:400 16px/18px 'SourceSans',sans-serif }
+html.serif { --text-font:400 16px/18px 'CrimsonPro',serif }
+html.legib { --text-font:400 16px/18px 'OpenSans',sans-serif }
+html.mono { --text-font:400 16px/20px 'JetBrainsMono',monospace }
+html.hwrite { --text-font:400 16px/20px 'PlaywriteGBS',sans-serif }
+
+/* Scrollbar Styling */
+*::-webkit-scrollbar {
+    all:unset;
+    width:0.45rem;
+    background:var(--bg-light);
+}
+
+*::-webkit-scrollbar-thumb {
+    background:var(--bg-dark);
+    border:0.05rem solid var(--bg-light);
+    border-radius:0.25rem;
+}
+
+*::-webkit-scrollbar-thumb:hover { background:var(--primary-accent) }
+*::-webkit-scrollbar-track { background:var(--bg-dark) }
+*::-webkit-scrollbar-corner { background:var(--bg-light) }
+
+/* Statline */
+footer div.statusline {
+    background:var(--bg-dark);
+    color:inherit;
+    font:1rem var(--font);
+    display:none;
+    border-top:0.1rem solid var(--primary-accent);
+    position:fixed;
+    padding:0.2rem;
+    bottom:0;
+    width:100%;
+}
+
+footer div.statusline::before {
+    content:'Status: ';
+    color:var(--primary-accent);
+    font-weight:525;
+}
+
+footer div.statusline.success::before {
+    content:'Success: '; 
+    color:lime; 
+}
+
+footer div.statusline.error::before { 
+    content:'Error: '; 
+    color:red; 
+}
+
+footer div.statusline.info::before {
+    content:'Info: '; 
+    color:rebeccapurple; 
+}
+
+/* Div that holds scripts for easy access */
+div.script-wrapper { 'display:none' }

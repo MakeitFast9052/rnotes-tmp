@@ -1,0 +1,36 @@
+:doctype: book
+:toc: macro
+:imagesdir: ./src-tauri/icons
+
+= https://rotenotes.netlify.app[Rote Notes]
+
+image::rnotes-logo.svg[]
+
+*Rote Notes* is a speed-first cross-platform text editor powered by Rust.
+
+== Installation
+* Go to the https://rotenotes.netlify.app[official homepage]
+* Go to Downloads > your platform (e.g. Windows)
+* Install the file and run
+
+== Contributing
+Rote Notes is FOSS (https://opensource.org/osd[Free and Open Source Software]), and anyone can contribute. To get started:
+
+. Run `git clone https://github.com/makeitfast9052/rnotes` to clone the repo
+. Create a new branch for your feature or fix with `git checkout -b my-feature`
+. Make your changes and test them thoroughly
+. Commit your changes with `git commit -m 'Updated xyz'`
+. Push your branch with `git push -u origin my-feature`
+. Open a pull request on GitHub to propose your changes
+
+== License
+Licensed under either of:
+
+* MIT
+OR
+* Apache-2.0
+
+At your option.
+
+== Contact
+For questions or feedback, please open an issue on https://github.com/makeitfast9052/rnotes/issues[GitHub] or contact the mailto:hamzaahmed151109@gmail.com[author].
