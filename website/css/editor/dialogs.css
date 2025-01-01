@@ -1,0 +1,114 @@
+/* Dialog */
+
+/* Layout */
+dialog {
+    border: 1px solid var(--primary-accent);
+    border-radius: 0.3rem;
+    background: var(--bg-light);
+    color: var(--color);
+    padding: 1rem;
+    box-shadow: 0 0 4px var(--primary-accent);
+    max-width: 500px;
+    margin: auto;
+    font: var(--font);
+}
+
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Close Button */
+dialog button.close {
+    all: unset;
+    color: var(--primary-accent);
+    font-size: 1rem;
+
+    padding: 0.2rem 0.3rem;
+
+    cursor: pointer;
+
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+
+dialog button.close:hover {
+    background: var(--bg-dark);
+    border-radius: 0.5rem;
+}
+
+/* Title */
+dialog h3 {
+    font: var(--font);
+    color: var(--primary-accent);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.5rem;
+}
+
+dialog a {
+    color: var(--primary-accent);
+    text-decoration: underline;
+}
+
+dialog a:hover {
+    color: var(--primary-accent);
+    text-decoration: none;
+}
+
+/* Miscellaneous */
+dialog code.cmd {
+    background: var(--bg-dark);
+    color: var(--primary-accent);
+    padding: 0.1rem;
+    border-radius: 0.2rem;
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+dialog i {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--color);
+}
+
+/* Keybind Dialog */
+.kbd-shortcuts {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    background: var(--bg-light);
+    font: var(--font);
+}
+
+.kbd-wrapper {
+    display: grid;
+    margin-top: 1rem;
+    gap: 8px;
+}
+
+.kbd-entry {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.kbd-entry button {
+    background: var(--bg-light);
+    color: var(--color);
+    border: none;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.kbd-entry kbd {
+    background: var(--bg-dark);
+    border-radius: 4px;
+    color: var(--color);
+    margin: 0 0.5rem;
+    padding: 0.25rem 0.5rem;
+    font: 400 0.8em/1.25em 'JetBrainsMono', monospace;
+}

@@ -1,0 +1,11 @@
+[package]
+name = "writer"
+version = "0.0.1"
+edition = "2021"
+
+[dependencies]
+pulldown-cmark = "0.12.1"
+wasm-bindgen = "0.2"
+
+[lib]
+crate-type = ["cdylib"]

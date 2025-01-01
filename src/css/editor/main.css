@@ -1,0 +1,118 @@
+/* Reset margins and paddings */
+html, body, div.preview { 
+    margin:0;
+    padding:0;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+/* Text Items' Container */
+.container {
+    color:var(--color);
+    font:var(--text-font);
+    overflow:scroll;
+}
+
+.container::-webkit-scrollbar { display:none }
+
+/* Input Fields */
+.filename, .input-area {
+    background:var(--bg-light);
+    display:block;
+    max-height:80vh;
+    color:var(--color);
+    box-shadow:0 0 5px var(--shadow);
+    caret-color:var(--primary-accent);
+    font:var(--text-font);
+    border-radius:0.15rem;
+}
+
+/* Input Styling */
+.filename {
+    border:none;
+    outline:none;
+    padding:0.2rem;
+    margin-bottom:0.2rem;
+}
+
+/* Textarea Styling */
+.textarea {
+    background:var(--bg-light);
+    color:var(--color);
+    caret-color:var(--primary-accent);
+    height:80vh;
+    font:var(--text-font);
+    resize:none;
+    border:none;
+    outline:none;
+    padding:0.2rem;
+    flex:1;
+}
+
+/* Line Numbers */
+.linenumbers {
+    display:block;
+    background:var(--bg-dark);
+    color:var(--secondary-accent);
+    height:80vh;
+    max-height:80vh;
+    font:var(--text-font);
+    border-right:1px solid var(--primary-accent);
+    padding:0.12rem;
+    text-align:right;
+    overflow:scroll;
+    min-width:fit-content;
+    max-width:max-content;
+}
+
+.linenumbers span {
+    counter-increment:linenumber; 
+}
+
+.linenumbers::-webkit-scrollbar {
+    display:none;
+}
+
+.linenumbers span::before {
+    content:counter(linenumber);
+    display:block;
+    color:var(--primary-accent);
+}
+
+/* Preview Section */
+div.preview {
+    background: var(--bg-light);
+    color: var(--color);
+    font: var(--text-font);
+    border: none;
+    border-radius: 3px;
+    padding: 0.6em;
+    box-shadow: 0 0 5px var(--shadow);
+    overflow: auto;
+}
+
+div.preview pre {
+    font: var(--text-font);
+}
+
+div.preview code pre {
+    color: green;
+    font: 400 1em/1.25em 'JetBrainsMono', monospace;
+}
+
+div.preview code {
+    background: var(--bg-dark);
+    font: 400 1em/1.25em 'JetBrainsMono', monospace;
+}
+
+/* Headings */
+div.preview h1, div.preview h2, div.preview h3, div.preview h4, div.preview h5, div.preview h6 { color: var(--primary-accent) }
+
+div.preview h1 { font-size: 1.75em; line-height: 1.2em; margin: 0.5em 0 }
+div.preview h2 { font-size: 1.5em; line-height: 1.2em; margin: 0.4em 0 }
+div.preview h3 { font-size: 1.25em; line-height: 1.2em; margin: 0.3em 0 }
+div.preview h4 { font-size: 1em; line-height: 1.2em; margin: 0.2em 0 }
+div.preview h5 { font-size: 0.75em; line-height: 1.2em; margin: 0.1em 0 }
+div.preview h6 { font-size: 0.5em; line-height: 1.2em; margin: 0.1em 0 }
+
+div.preview a { color: var(--secondary-accent) }
